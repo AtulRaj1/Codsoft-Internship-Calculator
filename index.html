@@ -42,10 +42,24 @@
         text-align: right;
         color: white;
         cursor: pointer;
+        transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease;
       }
 
       input::placeholder {
         color: #ffffff;
+      }
+
+      /* Focus effect for input */
+      input:focus {
+        outline: none; /* Remove default outline */
+        box-shadow: 0px 0px 8px rgba(251, 124, 20, 0.8), 0px 0px 15px rgba(251, 124, 20, 0.6); /* Glowing effect */
+        border: 2px solid #fb7c14; /* Optional border color */
+      }
+
+      /* Glow effect when "=" button is clicked */
+      .glow-effect {
+        box-shadow: 0px 0px 8px rgba(251, 124, 20, 0.8), 0px 0px 15px rgba(251, 124, 20, 0.6);
+        border: 2px solid #fb7c14;
       }
 
       button {
@@ -60,6 +74,7 @@
         box-shadow: -8px -8px 15px rgba(255, 255, 255, 0.1);
         cursor: pointer;
       }
+
       button:hover {
         box-shadow: 0px 0px 10px 4px rgba(255, 255, 255, 0.8),
           0px 0px 15px rgba(255, 255, 255, 0.6);
@@ -120,12 +135,20 @@
 
       let string = "";
       let arr = Array.from(buttons);
+
       arr.forEach((button) => {
         button.addEventListener("click", (e) => {
           if (e.target.innerHTML == "=") {
             try {
               string = eval(string);
               input.value = string;
+              // Add the glow effect to the input field
+              input.classList.add("glow-effect");
+
+              // Remove the glow effect after 1 second
+              setTimeout(() => {
+                input.classList.remove("glow-effect");
+              }, 1000); // Glow lasts for 1 second
             } catch {
               input.value = "Error";
               string = "";
